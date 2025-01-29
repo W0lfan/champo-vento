@@ -1,0 +1,153 @@
+@import '../main.scss';
+
+button {
+    padding:  
+        map-get($paddings, app-top-bottom-button-padding)
+        map-get($paddings, app-sides-button-padding);
+    border-radius: map-get($radiuses, app-first-border-radius);
+    cursor: pointer;
+    border: map-get($lengths, app-button-border-width) solid transparent;
+    transition: all map-get($times, app-transition-time);
+    font-weight: map-get($fonts, special-weight);
+    background-color: transparent;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: map-get($gaps, app-button-gap);
+    &.locked {
+       opacity: 0; 
+    }
+    &.disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+    span {
+        display: flex;
+        align-items: center;
+        justify-content: center;   
+    }
+    &.percent50 {
+        width: calc(50% - map-get(
+            $paddings, app-sides-button-padding
+        )*2);
+    }
+    &.primary {
+        border-color: map-get($colors, app-primary);
+        background-color: map-get($colors, app-primary);
+        color: map-get($colors, app-text-color-on-primary);
+        &:hover {
+            background-color: map-get($colors, app-primary-darker);
+            border-color: map-get($colors, app-primary-darker);
+        }
+    }
+    &.secondary {
+        border-color: map-get($colors, app-primary);
+        color: map-get($colors, app-primary);
+        &:hover {
+            background-color: map-get($colors, app-primary);
+            border-color:map-get($colors, app-primary-lighter); ;
+            color: map-get($colors, app-text-color-on-primary);
+        }
+    }
+    &.tertiary {
+        color: map-get($colors, app-primary-lighter);
+        * {
+            fill: map-get($colors, app-primary-lighter);
+        }
+        padding: map-get(
+            $paddings,
+            app-smaller-top-bottom-button-padding
+        ) map-get(
+            $paddings,
+            app-smaller-sides-button-padding
+        );
+        
+        &:hover {
+            color: map-get($colors, app-primary);
+            border-color: map-get(
+                $colors,
+                app-primary
+            );
+            * {
+                fill: map-get($colors, app-primary);
+            }
+        }
+    }
+
+    &.popup-warning, &.popup-error, &.popup-success {
+        width: 100%;
+    }
+    &.popup-warning {
+        background-color: map-get(
+            $colors,
+            functional-warning
+        );
+        border-color: map-get(
+            $colors,
+            functional-warning
+        );
+        color: map-get(
+            $colors,
+            functional-warning-lighter
+        );
+        &:hover {
+            background-color: map-get(
+                $colors,
+                functional-warning-darker
+            );
+            border-color: map-get(
+                $colors,
+                functional-warning-darker
+            );
+        }
+    }
+    &.popup-error {
+        background-color: map-get(
+            $colors,
+            functional-error
+        );
+        border-color: map-get(
+            $colors,
+            functional-error
+        );
+        color: map-get(
+            $colors,
+            functional-error-lighter
+        );
+        &:hover {
+            background-color: map-get(
+                $colors,
+                functional-error-darker
+            );
+            border-color: map-get(
+                $colors,
+                functional-error-darker
+            );
+        }
+    }
+    &.popup-success {
+        background-color: map-get(
+            $colors,
+            functional-success
+        );
+        border-color: map-get(
+            $colors,
+            functional-success
+        );
+        color: map-get(
+            $colors,
+            functional-success-lighter
+        );
+        &:hover {
+            background-color: map-get(
+                $colors,
+                functional-success-darker
+            );
+            border-color: map-get(
+                $colors,
+                functional-success-darker
+            );
+        }
+    }
+}

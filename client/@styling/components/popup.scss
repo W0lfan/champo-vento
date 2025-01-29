@@ -1,0 +1,151 @@
+@import '../main.scss';
+
+@keyframes Appear {
+    from {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+@keyframes Disappear {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+}
+
+
+
+@keyframes OpacityAdjust {
+    from {
+        opacity: 0;
+    } 
+    to {
+        opacity: 1;
+    }
+}
+.naflows-popup-hide {
+    animation: Disappear map-get(
+        $times,
+        app-transition-time-long
+    ) forwards;
+}
+
+
+
+
+
+.big-popup {
+    background: rgba(1, 1, 1, 0.5);
+    position:fixed;
+    -webkit-backdrop-filter: blur(100px); 
+
+    width: 100vw !important;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top:0;
+    left:0;
+    backdrop-filter: blur(100px);
+    z-index: 1000;
+    .naflows-popup-box  {
+        max-width: 45%;
+        min-height: 20vh;
+    }
+
+}
+
+.naflows-popup-box {
+    
+    width: calc(
+        100% - map-get(
+            $paddings,
+            app-second-padding
+        ) * 2
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    &:not(.naflows-popup-hide) {
+        animation: Appear map-get(
+            $times,
+            app-transition-time-long
+        ) ;
+    }
+    
+
+    .naflows-popup-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap:map-get(
+            $paddings,
+            app-first-padding
+        );
+        .naflows-popup-title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .naflows-popup-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap:map-get(
+                $paddings,
+                app-second-padding
+            );
+        }
+    }
+    border-radius: map-get(
+        $radiuses,
+        app-first-border-radius
+    );
+    padding: map-get(
+        $paddings,
+        app-second-padding
+    );
+    &#naflows-popup-box-error {
+        background-color: map-get(
+            $colors,
+            functional-error-lighter
+        );
+        color: map-get(
+            $colors,
+            functional-error
+        )  !important;
+    }
+    &#naflows-popup-box-success {
+        background-color: map-get(
+            $colors,
+            functional-success-lighter
+        );
+        color: map-get(
+            $colors,
+            functional-success
+        )  !important;
+    }
+    &#naflows-popup-box-warning {
+        background-color: map-get(
+            $colors,
+            functional-warning-lighter
+        );
+        color: map-get(
+            $colors,
+            functional-warning
+        ) !important;
+    }
+}

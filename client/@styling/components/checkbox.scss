@@ -1,0 +1,101 @@
+@import '../main.scss';
+
+.naflows-checkbox {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-width: 200px;
+    width: 100%;
+    gap: map-get(
+        $gaps,
+        app-second-gap
+    );
+    * {
+        transition: all map-get(
+            $times,
+            app-transition-time
+        ) ease-in-out;
+    }
+    .content {
+        color: map-get(
+            $colors,
+            app-text-color-on-background-lighter
+        );
+        font-weight: bold;
+    }
+    &.checked {
+        .content {
+            color: map-get(
+                $colors,
+                app-primary
+            );
+        }
+        .checker {
+            color : map-get(
+                $colors,
+                app-primary
+            ) !important;
+            .check {
+                left: calc(
+                    20px + map-get(
+                        $paddings,
+                        app-checkbox-checker-padding
+                    )
+                );
+                background-color: map-get(
+                    $colors,
+                    app-primary
+                );
+            }
+        }
+    }
+    .checker {
+        width: 40px;
+        height: 20px;
+        padding: map-get(
+            $paddings,
+            app-checkbox-checker-padding
+        );
+        border: map-get(
+            $lengths,
+            app-input-border-width
+        ) solid map-get(
+            $colors,
+            app-primary-lighter
+        );
+        border-radius: map-get(
+            $radiuses,
+            app-hard-border-radius
+        );
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        position:relative;
+        .check {
+            position:absolute;
+            top:0;
+            bottom:0;
+            margin:auto;
+            left: map-get(
+                $paddings,
+                app-checkbox-checker-padding
+            );
+            width: 20px;
+            height: 20px;
+            background-color: map-get(
+                $colors,
+                app-primary-lighter
+            );
+            border-radius: 50%;
+            &.checked {
+                left:calc(
+                    20px + map-get(
+                        $paddings,
+                        app-checkbox-checker-padding
+                    )
+                );
+            }
+        }
+    }
+}

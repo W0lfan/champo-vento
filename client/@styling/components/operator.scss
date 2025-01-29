@@ -1,0 +1,49 @@
+@import '../main.scss';
+
+
+.operator-informations {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap:map-get(
+        $paddings,
+        app-second-padding
+    );
+    .operator {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        .text {
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        img {
+            height: 50px;
+        }
+    }
+    .operator-links {
+        display: flex;
+        flex-direction: row;
+        gap: map-get(
+            $paddings,
+            app-second-padding
+        );
+        a {
+            text-decoration: none;
+            color: map-get(
+                $colors,
+                app-primary
+            );
+            font-weight: bold;
+            font-size: 14px;
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}

@@ -1,0 +1,62 @@
+@import '../main.scss';
+
+.naflows-loader-parent {
+    min-width: 250px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap:map-get(
+        $gaps,
+        app-first-gap
+    );
+    .message{
+        font-size: 20px;
+        font-weight: bold;
+        color: map-get(
+            $colors,
+            app-primary
+        );
+    }
+    .naflows-loader {
+        position:relative;
+        width: 100%;
+        height: 20px;
+        padding: map-get(
+            $paddings,
+            app-second-padding
+        );
+        background-color: map-get(
+            $colors,
+            app-background-color-darker
+        );
+        border-radius: map-get(
+            $radiuses,
+            app-first-border-radius
+        );
+        overflow: hidden;
+        position:relative;
+        width: 100%;
+        display: flex;
+        align-items: center;
+    
+        .bar {
+            background-color: map-get(
+                $colors,
+                app-primary
+            );
+            border-radius: map-get(
+                $radiuses,
+                app-first-border-radius
+            );
+            animation: animate_bar_two 3s infinite;
+            width: 20%;
+            height: 20px;
+            background-color: map-get(
+                $colors,
+                app-primary
+            );
+        }
+    }
+}
