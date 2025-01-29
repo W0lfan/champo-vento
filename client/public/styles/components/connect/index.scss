@@ -2,7 +2,12 @@
 
 .connect-panel {
     width: 50%;
-    min-height: 60vh;
+    min-height: calc(
+        80vh - map-get(
+            $paddings,
+            app-first-padding
+        ) * 2
+    );
     margin:auto;
     padding: map-get(
         $paddings,
@@ -18,33 +23,38 @@
     );
     display: flex;
     align-items: center;
-    justify-content: center;
     flex-direction: column;
     gap: map-get(
         $gaps,
-        app-first-gap
+        app-separator-gap
     );
-    .title {
-        margin: auto;
-        font-size: 24px;
-        color: map-get(
-            $colors,
-            app-text-color-on-background
-        );
-        font-weight: bold;
-    }
-    .informations {
-        width: 80%;
-        margin: auto;
-        text-align: center;
-        font-size: 14px;
-        color: map-get(
-            $colors,
-            app-text-color-on-background-lighter
-        );
+    .connect-panel-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        .title {
+            margin: auto;
+            font-size: 24px;
+            color: map-get(
+                $colors,
+                app-text-color-on-background
+            );
+            font-weight: bold;
+        }
+        .informations {
+            width: 80%;
+            margin: auto;
+            text-align: center;
+            font-size: 14px;
+            color: map-get(
+                $colors,
+                app-text-color-on-background-lighter
+            );
+        }
     }
     .service-inputs {
-        height: 100%;
+        min-height: 100%;
         width: 80%;
         display: flex;
         flex-direction: column;
@@ -82,6 +92,7 @@
         }
     }
 }
+
 
 
 .get-code {
@@ -139,6 +150,10 @@
                 $colors,
                 functional-success-lighter
             );
+            border: 2px solid map-get(
+                $colors,
+                functional-success
+            );
         }
         &.error {
             color: map-get(
@@ -148,6 +163,10 @@
             background-color: map-get(
                 $colors,
                 functional-error-lighter
+            );
+            border: 2px solid map-get(
+                $colors,
+                functional-error
             );
         }
     }

@@ -29,7 +29,7 @@ function generateSixDigitNumber() {
 
 
 const texts: { [key: string]: (nom: string, prénom: string, code: number) => string } = {
-    "Champo'Vento : connection": (nom: string, prénom: string, code: number) => {
+    "Champo'Vento : connexion": (nom: string, prénom: string, code: number) => {
         const templatePath = path.join(__dirname, 'patterns', 'code.html');
         const template = fs.readFileSync(templatePath, 'utf8');
 

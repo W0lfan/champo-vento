@@ -10,15 +10,16 @@ const ConnectToService = () => {
 
     return (
         <div className="connect-panel">
-            <div className="title">
-                Se connecter à Champo'Vento
-            </div>
-            <div className="informations">
-                Pour vous connecter ou créer un compte à ce service, 
-                vous devez renseigner votre nom et prénom, afin qu'un 
-                code vous soit envoyé sur la boîte mail de l'Institut 
-                Universitaire Jean-François Champollion. 
-                
+            <div className="connect-panel-header">
+                <div className="title">
+                    Se connecter à Champo'Vento
+                </div>
+                <div className="informations">
+                    Pour vous connecter ou créer un compte à ce service, 
+                    vous devez renseigner votre nom et prénom, afin qu'un 
+                    code vous soit envoyé sur la boîte mail de l'Institut 
+                    Universitaire Jean-François Champollion. 
+                </div>
             </div>
             <div className="service-inputs">
                 <Login data={data} setData={setData} />

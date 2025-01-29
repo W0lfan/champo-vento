@@ -13,9 +13,11 @@ async function setupDatabase() {
     await db.exec(`
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY,
-            name TEXT NOT NULL,
+            nom TEXT NOT NULL,
+            prenom TEXT NOT NULL,
             email TEXT NOT NULL UNIQUE,
             profilePicture TEXT,
+            licence TEXT,
             passwordHash TEXT NOT NULL
         );
 

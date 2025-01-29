@@ -3,6 +3,7 @@ import cors from 'cors';
 import sendMail from './mailing/sendMail';
 import setupDatabase from './database';
 import checkTempCode from './database/tempcode/check';
+import LogUser from './database/user/log';
 
 const port = 3000;
 
@@ -23,14 +24,15 @@ app.get('/', (req: Request, res: Response) => {
 app.post('/sendCode/:nom/:prenom', (req: Request, res: Response) => {
     const { nom, prenom } = req.params;
     console.log(`Nom: ${nom}, Prenom: ${prenom}`);
-    sendMail(req, res, "Champo'Vento : connection");
+    sendMail(req, res, "Champo'Vento : connexion");
 });
 
-app.post('/checkCode/:nom/:prenom/:code', (req: Request, res: Response) => {
-    const { nom, prenom, code } = req.params;
-    console.log(`Nom: ${nom}, Prenom: ${prenom}, Code: ${code}`);
-    checkTempCode(req, res);
+
+app.post('/log', (req: Request, res: Response) => {
+    LogUser(req, res);
 });
+
+
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);

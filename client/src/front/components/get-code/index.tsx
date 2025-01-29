@@ -4,10 +4,13 @@ import server from "../../../../server";
 import axios from 'axios';
 import NaflowsInput from "../../../../@components/input";
 
+
+
 interface GetCodeProps {
     data: {
         nom: string;
         prenom: string;
+        password: string;
     };
 }
 
@@ -19,7 +22,6 @@ const GetCode = ({
     const [codeSuccessSent, setCodeSuccessSent] = useState(false);
 
     const [buttonDisabled, setButtonDisabled] = useState(false);
-    const [isCodeGood, setIsCodeGood] = useState(false);
 
 
     const [code, setCode] = useState('');
@@ -68,27 +70,32 @@ const GetCode = ({
         });
     };
 
-    const handleFullCode = () => {
-        axios.post(`${server.address}/checkCode/${data.nom}/${data.prenom}/${code}`).then((res) => {
-            if (res.status === 200) {
+
+    const handleLogin = () => {
+        axios.post(`${server.address}/log`, {
+            nom: data.nom,
+            prenom: data.prenom,
+            code: code,
+            hashPassword : data.password
+        }).then((res) => {
+            if (res.data.success) {
                 setMessage({
-                    text : 'Code correct',
-                    type : 'success'
+                    text: res.data.message,
+                    type: 'success'
                 });
-                setIsCodeGood(true);
             } else {
                 setMessage({
-                    text : 'Code incorrect',
-                    type : 'error'
+                    text: res.data.message,
+                    type: 'error'
                 });
             }
         }).catch((error) => {
             console.error(error);
             setMessage({
-                text : 'Failed to send code',
-                type : 'error'
+                text: 'Failed to log in',
+                type: 'error'
             });
-        });
+        })
     }
 
     return (
@@ -96,7 +103,7 @@ const GetCode = ({
             {
                 codeSuccessSent && (
                     <NaflowsInput
-                        type="text"
+                        type="number"
                         placeholder="Code"
                         fillCondition={(value: string) => value.length >= 0 && value.length <= 6}
                         warning={(value: string) => {
@@ -117,18 +124,18 @@ const GetCode = ({
             <NaflowsButton
                 type={`primary ${buttonDisabled ? "disabled" : "" }`}
                 onUserClick={() => {
+                    if (!buttonDisabled) {
                         if (!sent) {
                             handleClick();
                             setSent(true);
                         } else {
-                            handleFullCode();
+                            handleLogin();
                         }
+                    }
                     
                 }}
                 content={[!sent ? `Envoyer un code à ${data.prenom.toLowerCase()}.${data.nom.toLowerCase()}@etud.univ-jfc.fr` : (
-                    (code.length == 6 && !isCodeGood) ? "Valider le code" : (
-                        isCodeGood ? "Se connecter" : "Renvoyer un code"
-                    )
+                    code.length == 6 ? "Se connecter" : "Code envoyé"
                 )]}
                 style={{}}
             />

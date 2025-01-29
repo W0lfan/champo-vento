@@ -15,17 +15,13 @@ const checkTempCode = async (req: Request, res: Response) => {
 
     const tempCode = await db.get(`
         SELECT * FROM temporaryCode WHERE nom = ? AND prenom = ?
-    `, [nom, prenom]);
+    `, [nom.toLowerCase(), prenom.toLowerCase()]);
 
-    if (tempCode.code === code) {
+    if (tempCode && tempCode.code === code && tempCode.expiration < Date.now()) {
         await deleteTempCode(tempCode.id);
-        res.send({
-            success : true
-        });
+        return true;
     } else {
-        res.send({
-            success : false
-        });
+        return false;
     }
 }
 

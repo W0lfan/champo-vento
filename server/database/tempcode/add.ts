@@ -8,13 +8,18 @@ const addTempCode = async (tempCode: Number, nom: string, prenom : string) => {
         driver: sqlite3.Database
     });
     await db.run(`
-        DELETE FROM temporaryCode WHERE nom = ? AND prenom = ?
-    `, [nom, prenom]);
+        DELETE FROM temporaryCode WHERE nom = ? AND prenom = ?;
+    `, [nom.toLowerCase(),prenom.toLowerCase()]);
+
+
+    console.log(`
+        Creating temporary code for ${nom} ${prenom}
+    `);
 
     await db.run(`
         INSERT INTO temporaryCode (id, code, nom, prenom, expiration)
-        VALUES (?, ?, ?, ?, ?)
-    `, [Date.now(), tempCode, nom, prenom, Date.now() + 600000]);
+        VALUES (?, ?, ?, ?, ?);
+    `, [Date.now(), tempCode, nom.toLowerCase(), prenom.toLowerCase(), Date.now() + 600000]);
 
 }
 
