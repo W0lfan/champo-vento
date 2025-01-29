@@ -32,7 +32,7 @@ const ActionsContainer = () => {
             <NaflowsButton
                 content={["Consulter la politique de données"]}
                 onUserClick={() => {
-                    window.location.href = '/help';
+                    window.location.href = '/legal/data-policy';
                 }}
                 type='secondary'
                 style={{}}

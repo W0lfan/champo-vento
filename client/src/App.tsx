@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import server from "../server";
 import NewPost from "./front/components/home/components/post/new-post";
+import DataPolicy from "./front/pages/legal/data-policy";
 
 function App() {
     const [user, setUser] = useState<
@@ -43,6 +44,7 @@ function App() {
         <Route path="/" element={<HomePage user={user} />} />
         <Route path="/profile" element={<WholeUserProfile user={user}/>} />
         <Route path="/post/new" element={<NewPost user={user} />} />
+        <Route path="/legal/data-policy" element={<DataPolicy />} />
       </Routes>
     </BrowserRouter>
   )
