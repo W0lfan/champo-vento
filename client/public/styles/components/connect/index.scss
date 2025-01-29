@@ -1,8 +1,8 @@
 @import '../../../../@styling/main.scss';
 
 .connect-panel {
-    width: 60%;
-    height: 60vh;
+    width: 50%;
+    min-height: 60vh;
     margin:auto;
     padding: map-get(
         $paddings,
@@ -17,22 +17,35 @@
         app-first-border-radius
     );
     display: flex;
+    align-items: center;
+    justify-content: center;
     flex-direction: column;
     gap: map-get(
         $gaps,
         app-first-gap
     );
-    .service-picker {
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        button {
-            width: 100%;
-        }
+    .title {
+        margin: auto;
+        font-size: 24px;
+        color: map-get(
+            $colors,
+            app-text-color-on-background
+        );
+        font-weight: bold;
     }
-
+    .informations {
+        width: 80%;
+        margin: auto;
+        text-align: center;
+        font-size: 14px;
+        color: map-get(
+            $colors,
+            app-text-color-on-background-lighter
+        );
+    }
     .service-inputs {
         height: 100%;
+        width: 80%;
         display: flex;
         flex-direction: column;
         gap: map-get(
@@ -46,6 +59,7 @@
     .input-container {
         display: flex;
         margin: auto;
+        width: 100%;
         &.row {
             flex-direction: row;
             gap: map-get(
@@ -59,6 +73,12 @@
                 $gaps,
                 app-first-gap
             );
+        }
+        * .full-length {
+            input {
+                width: calc(100% - 30px);
+            }
+            width: calc(100%) !important;
         }
     }
 }
@@ -90,5 +110,45 @@
     }
     button {
         width: 100%;
+    }
+
+    .message {
+        width: calc(
+            100% - map-get(
+                $paddings,
+                app-first-padding
+            ) * 2
+        );
+        padding: map-get(
+            $paddings,
+            app-first-padding
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: map-get(
+            $radiuses,
+            app-first-border-radius
+        );
+        &.success {
+            color: map-get(
+                $colors,
+                functional-success
+            );
+            background-color: map-get(
+                $colors,
+                functional-success-lighter
+            );
+        }
+        &.error {
+            color: map-get(
+                $colors,
+                functional-error
+            );
+            background-color: map-get(
+                $colors,
+                functional-error-lighter
+            );
+        }
     }
 }

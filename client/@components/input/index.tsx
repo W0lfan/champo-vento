@@ -9,6 +9,7 @@ interface NaflowsInputProps {
     fillCondition?: (e: string) => boolean;
     warning?: (e: string) => string;
     type?: string;
+    additionalClasses?: string;
 }
 
 const NaflowsInput: React.FC<NaflowsInputProps> = ({
@@ -20,7 +21,7 @@ const NaflowsInput: React.FC<NaflowsInputProps> = ({
     },
     warning,
     type = "text",
-    
+    additionalClasses = "",
 }) => {
     const [IN, setIn] = useState(
         defaultValue.length > 0 ? true : false
@@ -53,7 +54,7 @@ const NaflowsInput: React.FC<NaflowsInputProps> = ({
 
     return (
         <>
-            <div className={`input ${IN ? "in" : ""}`}>
+            <div className={`input ${IN ? "in" : ""} ${additionalClasses}`}>
                 <input
                     defaultValue={defaultValue}
                     type={type}

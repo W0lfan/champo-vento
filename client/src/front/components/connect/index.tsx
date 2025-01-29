@@ -1,41 +1,27 @@
 
 import { useState } from 'react';
 import '../../../../public/styles/components/connect/index.scss';
-import NaflowsButton from '../../../../@components/button';
 import Login from './login';
 
 const ConnectToService = () => {
-    const [setTypeOfService, setServiceType] = useState('login');
-    const [data, setData] = useState<{ nom: string; prenom: string }>({ nom: '', prenom: '' });
+    const [data, setData] = useState<{ nom: string; prenom: string, password: string }>({ nom: '', prenom: '', password : '' });
 
-        
-    const serviceText: { [key: string]: { text: string; content: JSX.Element[] } } = {
-        "login" : {
-            "text" : "Se connecter",
-            "content" : [<Login data={data} setData={setData} />]
-        },
-        "register" : {
-            "text" : "S'inscrire",
-            "content" : []
-        }
-    }
 
 
     return (
         <div className="connect-panel">
-            <div className="service-picker">
-                {["login", "register"].map((ser: string) => (
-                    <NaflowsButton
-                        key={ser}
-                        type={ser === setTypeOfService ? 'primary' : 'tertiary'}
-                        onUserClick={() => setServiceType(ser)}
-                        content={[serviceText[ser].text]}
-                        style={{}}
-                    />
-                ))}
+            <div className="title">
+                Se connecter à Champo'Vento
+            </div>
+            <div className="informations">
+                Pour vous connecter ou créer un compte à ce service, 
+                vous devez renseigner votre nom et prénom, afin qu'un 
+                code vous soit envoyé sur la boîte mail de l'Institut 
+                Universitaire Jean-François Champollion. 
+                
             </div>
             <div className="service-inputs">
-                {serviceText[setTypeOfService].content}
+                <Login data={data} setData={setData} />
             </div>
         </div>
     )

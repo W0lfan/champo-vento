@@ -1,5 +1,5 @@
 import ConnectToService from "./front/components/connect";
-
+import '../public/styles/index.scss';
 
 
 function App() {

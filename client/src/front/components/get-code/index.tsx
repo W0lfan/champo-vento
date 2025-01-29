@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NaflowsButton from "../../../../@components/button";
 import server from "../../../../server";
 import axios from 'axios';
@@ -15,51 +15,86 @@ const GetCode = ({
     data 
 }: GetCodeProps) => {
 
-    const [
-        sent, setSent
-    ] = useState(false);
+    const [sent, setSent] = useState(false);
+    const [codeSuccessSent, setCodeSuccessSent] = useState(false);
+
+    const [buttonDisabled, setButtonDisabled] = useState(false);
+    const [isCodeGood, setIsCodeGood] = useState(false);
 
 
     const [code, setCode] = useState('');
-    const [message, setMessage] = useState('');
+    interface Message {
+        text: string;
+        type: 'success' | 'error';
+    }
+
+    const [message, setMessage] = useState<Message | null>(null);
+
+    useEffect(() => {
+        if (sent && code.length != 6) {
+            setButtonDisabled(true);
+        } else {
+            setButtonDisabled(false);
+        }
+    }, [data,sent, code]);
+
+    useEffect(() => {
+        setTimeout(() => {
+            setMessage(null);
+        }, 5000);
+    }, [message])
 
     const handleClick = () => {
         axios.post(`${server.address}/sendCode/${data.nom}/${data.prenom}`).then((res) => {
-            alert(res);
             if (res.status === 200) {
-                setMessage('Code envoyé');
+                setMessage({
+                    text : 'Code envoyé',
+                    type : 'success'
+                });
+                setCodeSuccessSent(true);
             } else {
-                setMessage('Failed to send code');
+                setMessage({
+                    text : 'Failed to send code',
+                    type : 'error'
+                });
             }
         }).catch((error) => {
             console.error(error);
-            setMessage('Failed to send code');
+            setMessage({
+                text : 'Failed to send code',
+                type : 'error'
+            });
             setSent(false);
         });
     };
 
     const handleFullCode = () => {
         axios.post(`${server.address}/checkCode/${data.nom}/${data.prenom}/${code}`).then((res) => {
-            alert(res);
             if (res.status === 200) {
-                setMessage('Code correct');
+                setMessage({
+                    text : 'Code correct',
+                    type : 'success'
+                });
+                setIsCodeGood(true);
             } else {
-                setMessage('Code incorrect');
+                setMessage({
+                    text : 'Code incorrect',
+                    type : 'error'
+                });
             }
         }).catch((error) => {
             console.error(error);
-            setMessage('Code incorrect');
+            setMessage({
+                text : 'Failed to send code',
+                type : 'error'
+            });
         });
     }
 
     return (
         <div className="get-code">
-            <span className="subtext">
-                Un code vous sera envoyé à votre mail 
-                finissant par univ-jfc.fr
-            </span>
             {
-                message == "Code envoyé" && (
+                codeSuccessSent && (
                     <NaflowsInput
                         type="text"
                         placeholder="Code"
@@ -80,25 +115,24 @@ const GetCode = ({
                 )
             }
             <NaflowsButton
-                type={`primary ${sent || code.length != 6 ? "disabled" : "" }`}
+                type={`primary ${buttonDisabled ? "disabled" : "" }`}
                 onUserClick={() => {
-                    if (!sent && code.length != 6) {
                         if (!sent) {
                             handleClick();
                             setSent(true);
                         } else {
                             handleFullCode();
                         }
-                    }
+                    
                 }}
-                content={[!sent ? "Envoyer le code" : (
-                    code.length == 6 ? "Valider le code" : "Renvoyer le code"
+                content={[!sent ? `Envoyer un code à ${data.prenom.toLowerCase()}.${data.nom.toLowerCase()}@etud.univ-jfc.fr` : (
+                    (code.length == 6 && !isCodeGood) ? "Valider le code" : (
+                        isCodeGood ? "Se connecter" : "Renvoyer un code"
+                    )
                 )]}
                 style={{}}
             />
-            <span className="message">
-                {message}
-            </span>
+            {message && <div className={`message ${message.type}`}>{message.text}</div>}
 
         </div>
     )
