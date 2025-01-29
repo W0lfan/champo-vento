@@ -37,6 +37,7 @@ $colors: (
     app-background-color : $app-background-color,
     app-background-color-lighter : lighter($app-background-color, 30%),
     app-background-color-darker : darker($app-background-color, 4.5%),
+    app-background-color-darker-2 : darker($app-background-color, 9%),
 
     app-secondary : $app-secondary,
     app-secondary-darker : darker($app-secondary, 4.5%),

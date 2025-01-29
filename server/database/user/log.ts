@@ -3,7 +3,8 @@ import { Database } from 'sqlite';
 import sqlite3 from 'sqlite3';
 import { open } from 'sqlite';
 import checkTempCode from '../tempcode/check';
-
+import addSession from '../sessions/add';
+import { db } from '..';
 
 const LogUser = async (req: Request, res: Response) => {
     const { 
@@ -11,54 +12,60 @@ const LogUser = async (req: Request, res: Response) => {
         prenom,
         hashPassword,
         code 
-     } = req.body;
+    } = req.body;
 
-    const db: Database = await open({
-        filename: './database.sqlite',
-        driver: sqlite3.Database
-    }); 
+    try {
+        const isCodeGood = await checkTempCode(req);
 
-    const isCodeGood = await checkTempCode(req, res);
+        if (!isCodeGood) {
+            console.log("Code invalide");
+            res.send({
+                success: false,
+                message: 'Code invalide'
+            });
+            return;
+        }
 
-    const doesUserExist = await db.get(`
-        SELECT * FROM users WHERE nom = ? AND prenom = ? AND passwordHash = ? 
-    `, []); 
+        const doesUserExist = await db.get(`
+            SELECT * FROM users WHERE nom = ? AND prenom = ? AND passwordHash = ? 
+        `, [nom, prenom, hashPassword]);
 
-    if (!isCodeGood) {
-        console.log("Code invalide");
-        res.send({
+        console.log(isCodeGood, "isCodeGood");
+
+        const id = new Date().getTime();
+
+        if (!doesUserExist) {
+            const token = await addSession(req, id);
+            await db.run(`
+                INSERT INTO users (
+                    id,
+                    nom,
+                    prenom,
+                    passwordHash
+                )
+                VALUES (?, ?, ?, ?);
+            `, [id, nom, prenom, hashPassword]);
+            res.send({
+                success: true,
+                message: 'Utilisateur créé avec succès',
+                token: token
+            });
+        } else {
+            console.log("Utilisateur connecté");
+            const token = await addSession(req, doesUserExist.id);
+            res.send({
+                success: true,
+                message: 'Utilisateur connecté',
+                token: token
+            });
+        }
+    } catch (error) {
+        console.error("Database error:", error);
+        res.status(500).send({
             success: false,
-            message: 'Code invalide'
+            message: 'Internal server error'
         });
-        return;
-    } 
-
-    if (!doesUserExist) {
-        console.log("Utilisateur déjà existant");
-        await db.run(`
-            INSERT INTO users (
-                id,
-                nom,
-                prenom,
-                email,
-                passwordHash
-            )
-        `, [new Date().getTime(), nom, prenom, req.body.email, hashPassword]);
-        res.send({
-            success: true,
-            message: 'Utilisateur créé avec succès'
-        });
-        return;
-    } else {
-        console.log("Utilisateur connecté");
-        res.send({
-            success: true,
-            message: 'Utilisateur connecté'
-        });
-        return;
     }
-    
 };
-
 
 export default LogUser;

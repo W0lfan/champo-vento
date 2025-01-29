@@ -48,6 +48,11 @@
         font-size: 12px;
         height: 21px;
     }
+    &.background-darker {
+        input, label {
+            background-color: map-get($colors, app-background-color-darker) !important;
+        }
+    }
     &:hover, &:focus-within, &.in {
         input {
             z-index:  1
