@@ -6,6 +6,7 @@ import setupDatabase, { db } from './database';
 import LogUser from './database/user/log';
 import CheckSession from './database/sessions/check';
 import UploadProfilePicture from './database/user/uploadProfilePicture';
+import { GetUser, returnUser } from './database/user/get';
 
 const port = 3000;
 
@@ -84,6 +85,41 @@ app.post('/post', async (req: Request, res: Response) => {
 
 });
 
+app.post('/interest', async (req: Request, res: Response) => {
+    const {
+        user_id,
+        post_id
+    } = req.body;
+
+    const doesInterestExist = await db.get(`
+        SELECT * FROM interests WHERE user_id = ? AND post_id = ?
+    `, [user_id, post_id]);
+
+    if (doesInterestExist) {
+        await db.run(`DELETE FROM interests WHERE user_id = ? AND post_id = ?`, [user_id, post_id]);
+        res.send({
+            success: true,
+            message: 'Interest deleted successfully'
+        });
+        return;
+    } else {
+        await db.run(`
+            INSERT INTO interests (
+                user_id,
+                post_id,
+                id
+            )
+            VALUES (?, ?, ?);
+        `, [user_id, post_id, new Date().getTime()]);
+        res.send({
+            success: true,
+            message: 'Interest created successfully'
+        });
+    }
+});
+
+
+
 app.get('/getroles/:userID', async (req: Request, res: Response) => {
     const allRelations = await db.all(`
         SELECT * FROM userRoles WHERE user_id = ?
@@ -103,12 +139,116 @@ app.get('/getroles/:userID', async (req: Request, res: Response) => {
 });
 
 
-app.get('/get/posts', async (_req: Request, res: Response) => {
+app.post('/get/posts', async (_req: Request, res: Response) => {
+
+    let { quantity, before } = _req.body;
+
+    if (!before) {
+        before = new Date().getTime();
+    }
+
+    console.log(quantity, before);
+
+
     const posts = await db.all(`
-        SELECT * FROM posts;
-    `);
+        SELECT * FROM posts
+        WHERE date > ?
+        ORDER BY date DESC
+        LIMIT ? 
+    `, [quantity, before]);
 
     res.json(posts);
+});
+
+
+app.post('/get/post', async (_req: Request, res: Response) => {
+    const { id } = _req.body;
+
+    const post = await db.get(`
+        SELECT * FROM posts WHERE id = ?
+    `, [id]);
+
+    res.json(post);
+});
+
+app.post('/get/user', async (_req: Request, res: Response) => {
+    GetUser(_req, res);
+});
+
+app.post('/get/category', async (_req: Request, res: Response) => {
+    const { id } = _req.body;
+    const category = await db.get(`
+        SELECT * FROM categories WHERE id = ?
+    `, [id]);
+
+    if (category) {
+        res.json({
+            name : category.name,
+            color : category.color
+        });
+    }
+});
+
+app.post('/post/comment', async (_req: Request, res: Response) => {
+    const { content, author_id, post_id } = _req.body;
+    const date = new Date().getTime();
+
+    await db.run(`
+        INSERT INTO comments (
+            content,
+            author_id,
+            post_id,
+            date,
+            id
+        )
+        VALUES (?, ?, ?, ?, ?);
+    `, [content, author_id, post_id, date, new Date().getTime()]);
+
+    res.send({
+        success: true,
+        message: 'Comment created successfully'
+    });
+});
+
+app.post('/delete/comment', async (_req: Request, res: Response) => {
+    const { 
+        comment_id,
+        author_id
+     } = _req.body;
+
+    await db.run(`
+        DELETE FROM comments WHERE id = ? AND author_id = ?
+    `, [comment_id, author_id]);
+
+    res.send({
+        success: true,
+        message: 'Comment deleted successfully'
+    });
+});
+
+app.post('/get/interests', async (_req: Request, res: Response) => {
+    const { post_id } = _req.body;
+
+    const interests = await db.all(`
+        SELECT * FROM interests WHERE post_id = ?
+    `, [post_id]);
+
+    res.json(interests);
+});
+
+app.post('/get/comments', async (_req: Request, res: Response) => {
+    const { post_id } = _req.body;
+
+    const comments = await db.all(`
+        SELECT * FROM comments WHERE post_id = ?
+    `, [post_id]);
+
+    for (const comment of comments) {
+        const user = await returnUser(comment.author_id);
+        comment.user = user;
+    }
+
+    res.json(comments);
 });
 
 app.get('/get/categories', async (_req: Request, res: Response) => {

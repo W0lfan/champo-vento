@@ -1,0 +1,137 @@
+@import '../../../../../../../@styling/main.scss';
+
+
+.page-body {
+    display: flex;
+    flex-direction: column;
+    gap: map-get(
+        $gaps,
+        app-separator-gap
+    );
+    .post-display-big, .post-comments {
+        padding: map-get(
+            $paddings,
+            app-first-padding
+        );
+        width: calc(
+            100% - map-get(
+                $paddings,
+                app-first-padding
+            ) * 2
+        );
+        background-color: map-get(
+            $colors,
+            app-background-color-darker
+        );
+        border-radius: map-get(
+            $radiuses,
+            app-first-border-radius
+        );
+    }
+
+    .post-display-big {
+        display: flex;
+        flex-direction: column;
+        gap: map-get(
+            $gaps,
+            app-first-gap
+        );
+        .user-informations {
+            display: flex;
+            flex-direction: row;
+            gap: map-get(
+                $gaps,
+                app-second-gap
+            );
+            font-size: 18px;
+            align-items: center;
+            cursor: pointer;
+            &:hover {
+                text-decoration: underline;
+            }
+            width: fit-content;
+            transition: background-color 0.2s;
+            border-radius: map-get(
+                $radiuses,
+                app-first-border-radius
+            );
+            img {
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+            }
+        }
+        .display-body {
+            display: flex;
+            flex-direction: column;
+            gap: map-get(
+                $gaps,
+                app-first-gap
+            );
+            .display-content {
+                font-size: 20px;
+            }
+            .display-header {
+                display: flex;
+                flex-direction: column;
+                .display-big-header {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                    .header {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: start;
+                        .display-small-title {
+                            display: flex;
+                            flex-direction: row;
+                            gap: map-get(
+                                $gaps,
+                                app-separator-gap
+                            );
+                            align-items: center;
+                            .title {
+                                font-size: 30px;
+                                font-weight: bold;
+                            }
+                        }
+                        .informations {
+                            display: flex;
+                            flex-direction: row;
+                            gap: map-get(
+                                $gaps,
+                                app-second-gap
+                            );
+                            align-items: center;
+                            color: map-get(
+                                $colors,
+                                app-text-color-on-background-lighter
+                            );
+                            svg, svg * {
+                                fill: map-get(
+                                    $colors,
+                                    app-text-color-on-background-lighter
+                                );
+                            }
+                            svg {
+                                width: 5px;
+                                height: 5px;
+                            }
+                        }
+                    }
+                    .actions {
+                        display: flex;
+                        flex-direction: row;
+                        gap: map-get(
+                            $gaps,
+                            app-second-gap
+                        );
+                        align-items: center;
+                    }
+                }
+            }
+        }
+        
+    }
+}

@@ -8,17 +8,12 @@ import axios from "axios";
 import server from "../server";
 import NewPost from "./front/components/home/components/post/new-post";
 import DataPolicy from "./front/pages/legal/data-policy";
+import DisplayBig from "./front/components/home/components/feed/components/post/display-big";
+import { UserType } from "./front/types/user.type";
 
 function App() {
     const [user, setUser] = useState<
-    {
-        nom: string;
-        prenom: string;
-        password: string;
-        code: string;
-        id: string;
-        profilePicture: string;
-    } | null
+    UserType | null
   >(null);
 
   useEffect(() => {
@@ -45,6 +40,7 @@ function App() {
         <Route path="/" element={<HomePage user={user} />} />
         <Route path="/profile" element={<WholeUserProfile user={user}/>} />
         <Route path="/post/new" element={<NewPost user={user} />} />
+        <Route path="/post" element={<DisplayBig user={user} />} />
         <Route path="/legal/data-policy" element={<DataPolicy />} />
       </Routes>
     </BrowserRouter>

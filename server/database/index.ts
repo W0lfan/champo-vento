@@ -45,7 +45,8 @@ async function setupDatabase() {
             content TEXT NOT NULL,
             author_id INTEGER NOT NULL,
             date INTEGER NOT NULL,
-            category_id INTEGER NOT NULL
+            category_id INTEGER NOT NULL,
+            pinned INTEGER
         );
 
         CREATE TABLE IF NOT EXISTS comments (
@@ -54,6 +55,12 @@ async function setupDatabase() {
             author_id INTEGER NOT NULL,
             post_id INTEGER NOT NULL,
             date INTEGER NOT NULL
+        );
+
+        CREATE TABLE IF NOT EXISTS interests (
+            id INTEGER PRIMARY KEY,
+            user_id INTEGER NOT NULL,
+            post_id INTEGER NOT NULL
         );
 
 

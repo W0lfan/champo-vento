@@ -1,7 +1,6 @@
 import axios from "axios";
 import { UserType } from "../../../../../../types/user.type";
 import server from "../../../../../../../../server";
-import NaflowsPopup from "../../../../../../../../@components/popup";
 import NaflowsButton from "../../../../../../../../@components/button";
 import '../../../../../../../../public/styles/components/home/post/warning/index.scss';
 
@@ -28,11 +27,11 @@ const WarningBeforePost = ({
         )
         axios.post(`${server.address}/post`, {
             title,
-            content: editorContent,
+            content: JSON.stringify(editorContent),
             category_id: categoryID,
             author_id: user?.id
         }).then((res) => {
-            alert(res.message)
+            alert(res.data.message)
         }).catch((error) => {
             console.error(error);
         });

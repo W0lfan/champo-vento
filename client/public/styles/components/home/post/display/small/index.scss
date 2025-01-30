@@ -1,0 +1,153 @@
+@import '../../../../../../../@styling/main.scss';
+
+.display-small {
+    width: calc(
+        100% - map-get(
+            $paddings,
+            app-first-padding
+        ) * 2
+    );
+    border-radius: map-get(
+        $radiuses,
+        app-first-border-radius
+    );
+    background-color: map-get(
+        $colors,
+        app-background-color-darker
+    );
+    display: flex;
+    flex-direction: column;
+    gap: map-get(
+        $gaps,
+        app-first-gap
+    );
+    padding: map-get(
+        $paddings,
+        app-first-padding
+    );
+
+    cursor: pointer;
+    transition: background-color 0.2s;
+    &:hover {
+        background-color: map-get(
+            $colors,
+            app-background-color-darker-2
+        );
+    }
+
+    .user-informations {
+        display: flex;
+        flex-direction: row;
+        gap: map-get(
+            $gaps,
+            app-second-gap
+        );
+        font-size: 18px;
+        align-items: center;
+        img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+    }
+
+    .display-body {
+        display: flex;
+        flex-direction: column;
+        gap: map-get(
+            $gaps,
+            app-second-gap
+        );
+        .display-header {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+
+            .display-small-header {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: map-get(
+                    $gaps,
+                    app-separator-gap
+                );
+                align-items: center;
+                .display-small-title {
+                    font-size: 20px;
+                    font-weight: bold;
+                    display: flex;
+                    align-items: center;
+                    flex-direction: row;
+                    gap: map-get(
+                        $gaps,
+                        app-second-gap
+                    );
+                    svg, svg * {
+                        fill: map-get(
+                            $colors,
+                            app-primary
+                        )
+                    }
+                }
+            }
+
+        }
+
+        .display-small-snippet {
+            color: map-get(
+                $colors,
+                app-text-color-on-background-lighter
+            );
+        }
+
+    }
+    .display-small-informations {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: end;
+        width: 100%;
+        gap: map-get(
+            $gaps,
+            app-third-gap
+        );
+        .date {
+            color:map-get(
+                $colors,
+                app-text-color-on-background-lighter
+            )
+        }
+        .interests {
+            display: flex;
+            flex-direction: row;
+            gap: map-get(
+                $gaps,
+                app-third-gap
+            );
+            padding: map-get(
+                $paddings,
+                app-second-padding
+            );
+            border-radius: map-get(
+                $radiuses,
+                app-second-border-radius
+            );
+            background-color: map-get(
+                $colors,
+                app-primary
+            );
+            color: map-get(
+                $colors,
+                app-text-color-on-primary
+            );
+            svg, svg * {
+                fill: map-get(
+                    $colors,
+                    app-text-color-on-primary
+                )
+            }
+            
+        }
+    }
+}
