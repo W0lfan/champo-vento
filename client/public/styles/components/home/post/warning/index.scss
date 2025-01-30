@@ -1,0 +1,54 @@
+@import '../../../../../../@styling/main.scss';
+
+
+.warning-before-post {
+    backdrop-filter: blur(5px);
+    background-color: rgba(0, 0, 0, 0.5);
+    position:fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+    .warning-body {
+        background-color: map-get(
+            $colors,
+            app-background-color
+        );
+        padding: map-get(
+            $paddings, 
+            app-first-padding
+        );
+        border-radius: map-get(
+            $radiuses,
+            app-first-border-radius
+        );
+        display: flex;
+        flex-direction: column;
+        gap: map-get(
+            $gaps,
+            app-first-gap
+        );
+        .choices {
+            display: flex;
+            flex-direction: row;
+            gap: map-get(
+                $gaps,
+                app-second-gap
+            );
+            justify-content: end;
+            align-items: center;
+        }
+        .title {
+            font-size: 20px;
+            font-weight: bold;
+            color:map-get(
+                $colors,
+                app-primary
+            );
+        }
+    }
+}

@@ -45,6 +45,44 @@ app.post('/upload', async (req: Request, res: Response) => {
     await UploadProfilePicture(req, res);
 });
 
+app.post('/post', async (req: Request, res: Response) => {
+    const {
+        title,
+        content,
+        author_id,
+        category_id
+    } = req.body;
+    const date = new Date().getTime();
+    console.log(req.body);
+    const doesPostExist = await db.get(`
+        SELECT * FROM posts WHERE title = ? AND author_id = ?
+    `, [title, author_id]);
+
+    if (doesPostExist) {
+        res.send({
+            success: false,
+            message: 'Post already exists'
+        });
+        return;
+    } else {
+        await db.run(`
+            INSERT INTO posts (
+                title,
+                content,
+                author_id,
+                date,
+                category_id,
+                id
+            )
+            VALUES (?, ?, ?, ?, ?, ?);
+        `, [title, content, author_id, date, category_id, new Date().getTime()]);
+        res.send({
+            success: true,
+            message: 'Post created successfully'
+        });
+    }
+
+});
 
 app.get('/getroles/:userID', async (req: Request, res: Response) => {
     const allRelations = await db.all(`
@@ -64,6 +102,22 @@ app.get('/getroles/:userID', async (req: Request, res: Response) => {
     res.json(roles);
 });
 
+
+app.get('/get/posts', async (_req: Request, res: Response) => {
+    const posts = await db.all(`
+        SELECT * FROM posts;
+    `);
+
+    res.json(posts);
+});
+
+app.get('/get/categories', async (_req: Request, res: Response) => {
+    const categories = await db.all(`
+        SELECT * FROM categories;
+    `);
+
+    res.json(categories);
+});
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);

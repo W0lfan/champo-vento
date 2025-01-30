@@ -5,7 +5,7 @@ import React from 'react';
 interface NaflowsPopupProps {
     type: string;
     title: string;
-    content: string;
+    content: string | JSX.Element[];
     additionnalClasses: string;
     close: boolean;
     setHidePopup: (hide: boolean) => void;

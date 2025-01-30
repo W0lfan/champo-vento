@@ -1,0 +1,174 @@
+@import '../../../../../../@styling/main.scss';
+
+
+.new-post-button {
+    position:fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
+.post-actions, .new-post, .post-informations {
+    padding: map-get(
+        $paddings,
+        app-second-padding
+    );
+    background-color: map-get(
+        $colors,
+        app-background-color-darker
+    );
+    border-radius: map-get(
+        $radiuses,
+        app-first-border-radius
+    );
+}
+
+.post-informations {
+    font-size: 14px;
+    color: map-get(
+        $colors,
+        app-text-color-on-background-lighter
+    );
+}
+
+.post-edition {
+    display: flex;
+    flex-direction: row;
+    gap: map-get(
+        $gaps,
+        app-second-gap
+    );
+    .post-actions {
+        display: flex;
+        flex-direction: column;
+        gap: map-get(
+            $gaps,
+            app-second-gap
+        );
+        width: calc(
+            20% - map-get(
+                $gaps,
+                app-second-gap
+            )
+        );
+        button {
+            width: 100%;
+        }
+    }
+    .new-post {
+        width: 80%;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        gap: map-get(
+            $gaps,
+            app-separator-gap
+        );
+        .post-buttons {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+        .new-post-edit {
+            display: flex;
+            flex-direction: column;
+            gap:map-get(
+                $gaps,
+                app-second-gap
+            );
+            .new-post-field {
+                &.header {
+                    display: flex;
+                    flex-direction: row;
+                    gap: map-get(
+                        $gaps,
+                        app-second-gap
+                    );
+                    align-items: center;
+                }  
+                display: flex;
+                flex-direction: column;
+                .categories-picker {
+                    display: flex;
+                    position:relative;
+                    &.display {
+                        .choices {
+                            opacity: 1;
+                            transition: all 0.3s;
+                            z-index: 10;
+                        }
+                    }
+                    .choices {
+                        transition: all 0.3s;
+                        position:absolute;
+                        top: 110%;
+                        left: 0;
+                        width: 50vh;
+                        display: flex;
+                        flex-direction: row;
+                        flex-wrap: wrap;
+                        z-index: 10;
+                        gap: map-get(
+                            $gaps,
+                            app-second-gap
+                        );
+                        color: white;
+                        padding: map-get(
+                            $paddings,
+                            app-second-padding
+                        );
+                        background-color: map-get(
+                            $colors,
+                            app-background-color
+                        );
+                        border: 2px solid map-get(
+                            $colors,
+                            app-background-color-darker-2
+                        );
+                        border-radius: map-get(
+                            $radiuses,
+                            app-second-border-radius
+                        );
+                        opacity: 0;
+                        z-index: 0;
+                    }
+                }
+                input {
+                    padding: map-get(
+                        $paddings,
+                        app-third-padding
+                    );
+                    border-radius: map-get(
+                        $radiuses,
+                        app-second-border-radius
+                    );
+                    border:none;
+                    outline:none;
+                    font-size: 20px;
+                }
+            }
+        }
+    }
+}
+
+
+#editor-js {
+    overflow: hidden;
+    border-radius: map-get(
+        $radiuses,
+        app-second-border-radius
+    );
+    padding: map-get(
+        $paddings,
+        app-second-padding
+    );
+    width: calc(
+        100% - map-get(
+            $paddings,
+            app-second-padding
+        ) * 2
+    );
+        background-color: map-get(
+            $colors,
+            app-background-color
+        );
+}

@@ -1,5 +1,5 @@
 const server = {
-    "address" : "http://localhost:3000",
+    "address" : "http://192.168.124.5:3000",
 }
 
 export default server;

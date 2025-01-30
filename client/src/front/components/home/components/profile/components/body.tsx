@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import NaflowsButton from "../../../../../../../@components/button";
-import NaflowsInput from "../../../../../../../@components/input";
 import { UserType } from "../../../../../types/user.type";
 import axios from "axios";
 import server from "../../../../../../../server";
@@ -66,29 +65,31 @@ function UserProfileBody({
                     {`${user?.prenom.toLowerCase()}.${user?.nom.toLowerCase()}@etud.univ-jfc.fr`}
                 </div>
             </div>
-            <div className="field">
-                <div className="field-title">
-                    Réseaux sociaux
-                </div>
-                <div className="field-content">
-                    <NaflowsInput
-                        type="text"
-                        placeholder="Instagram"
-                        defaultValue={user?.instagram || ''}
-                        onUserInput={() => {
+            {/*
+                <div className="field">
+                    <div className="field-title">
+                        Réseaux sociaux
+                    </div>
+                    <div className="field-content">
+                        <NaflowsInput
+                            type="text"
+                            placeholder="Instagram"
+                            defaultValue={user?.instagram || ''}
+                            onUserInput={() => {
 
-                        }}
-                        additionalClasses="background-darker"
-                    />
-                    <NaflowsInput
-                        type="text"
-                        placeholder="Linkedin"
-                        defaultValue={user?.linkedin || ''}
-                        onUserInput={() => {}}
-                        additionalClasses="background-darker"
-                    />
+                            }}
+                            additionalClasses="background-darker"
+                        />
+                        <NaflowsInput
+                            type="text"
+                            placeholder="Linkedin"
+                            defaultValue={user?.linkedin || ''}
+                            onUserInput={() => {}}
+                            additionalClasses="background-darker"
+                        />
+                    </div>
                 </div>
-            </div>
+            */}
             <div className="field">
                 <div className="field-title">
                     Mot de passe

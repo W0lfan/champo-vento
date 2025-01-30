@@ -1,0 +1,17 @@
+@import '../../../../@styling/main.scss';
+
+
+.category {
+    padding: map-get(
+        $paddings,
+        app-third-padding
+    ) map-get(
+        $paddings,
+        app-first-padding
+    );
+    border-radius: map-get(
+        $radiuses,
+        app-second-border-radius
+    );
+    width: fit-content;
+}

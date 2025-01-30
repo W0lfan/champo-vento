@@ -1,5 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+@import "../../@styling/main.scss";
 
 body {
     font-family: 'Nunito', sans-serif;
+}
+
+.home-page {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: map-get(
+        $paddings,
+        app-first-padding
+    );
+
+    margin: auto;
+}
+
+.home-page-header {
+    display: flex;
+    .profile-home {
+        margin-left: auto;
+    }
 }

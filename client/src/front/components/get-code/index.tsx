@@ -84,7 +84,6 @@ const GetCode = ({
                     type: 'success'
                 });
                 localStorage.setItem('token', res.data.token);
-                alert("Vous êtes connecté");
             } else {
                 setMessage({
                     text: res.data.message,

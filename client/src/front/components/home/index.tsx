@@ -1,22 +1,28 @@
 import { UserType } from '../../types/user.type';
+import UserFeed from './components/feed';
+import CreateNewPostButton from './components/post/new-post/button';
 import ProfileHome from './components/profile/profile-home';
 
 interface HomePageprops {
-    user : UserType| null;
+    user: UserType | null;
 }
 
 
 const HomePage = ({
     user
-} : HomePageprops) => {
+}: HomePageprops) => {
 
 
     return (
         <div className="home-page">
-            <ProfileHome user={user} />
+            <div className="home-page-header">
+                <ProfileHome user={user} />
+            </div>
+            <UserFeed user={user} />
+            <CreateNewPostButton />
         </div>
     )
-  
+
 }
 
 export default HomePage;

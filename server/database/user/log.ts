@@ -27,8 +27,8 @@ const LogUser = async (req: Request, res: Response) => {
         }
 
         const doesUserExist = await db.get(`
-            SELECT * FROM users WHERE nom = ? AND prenom = ? AND passwordHash = ? 
-        `, [nom, prenom, hashPassword]);
+            SELECT * FROM users WHERE nom = ? AND prenom = ? 
+        `, [nom, prenom]);
 
         console.log(isCodeGood, "isCodeGood");
 
@@ -51,13 +51,19 @@ const LogUser = async (req: Request, res: Response) => {
                 token: token
             });
         } else {
-            console.log("Utilisateur connecté");
-            const token = await addSession(req, doesUserExist.id);
-            res.send({
-                success: true,
-                message: 'Utilisateur connecté',
-                token: token
-            });
+            if (doesUserExist.passwordHash === hashPassword) {
+                const token = await addSession(req, doesUserExist.id);
+                res.send({
+                    success: true,
+                    message: 'Utilisateur connecté avec succès',
+                    token: token
+                });
+            } else {
+                res.send({
+                    success: false,
+                    message: 'Mot de passe incorrect'
+                });
+            }
         }
     } catch (error) {
         console.error("Database error:", error);

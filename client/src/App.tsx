@@ -29,6 +29,7 @@ function App() {
         }).then((res) => {
             if (res.data.success) {
                 setUser(res.data.user);
+                console.log("Setting user", res.data.user);
             } 
         }).catch((error) => {
             console.error(error);
